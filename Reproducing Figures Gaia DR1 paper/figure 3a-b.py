@@ -2,6 +2,7 @@ import astropy.units as u
 from astropy.coordinates.sky_coordinate import SkyCoord
 from astropy.units import Quantity
 from astroquery.gaia import Gaia
+from matplotlib.colors import LogNorm
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -20,12 +21,15 @@ hip.e_b_v > 0.0 and hip.e_b_v <= 0.05 and \
 print(job)
 
 r = job.get_results()
-print(r['g_mag_abs_gaia'])
-
-
+x=r['b_v']
+y_gaia=r['g_mag_abs_gaia']
+y_hip=r['g_mag_abs_hip']
 
 plt.subplot(1, 2, 1)
-plt.scatter(r['b_v'], r['g_mag_abs_hip'], color='g', s=0.1)
+counts_hip,xbins_hip,ybins_hip,image_hip = plt.hist2d(x,y_hip,bins=250
+                                      ,norm=LogNorm()
+                                      , cmap = plt.cm.viridis)
+plt.contour(counts_hip.transpose(), extent=[xbins_hip.min(),xbins_hip.max(),ybins_hip.min(),ybins_hip.max()], colors='k', linewidth=0.01, levels = [10,30,50])
 plt.text(-0.1, 10.0, 'Hipparcos')
 plt.xlim(-0.3,2.0)
 plt.ylim(-4.0,12.5)
@@ -34,7 +38,10 @@ plt.ylabel(r'$M_G$')
 plt.gca().invert_yaxis()
 
 plt.subplot(1, 2, 2)
-plt.scatter(r['b_v'], r['g_mag_abs_gaia'], color='g', s=0.1)
+counts_gaia,xbins_gaia,ybins_gaia,image_gaia = plt.hist2d(x,y_gaia,bins=250
+                                      ,norm=LogNorm()
+                                      , cmap = plt.cm.viridis)
+plt.contour(counts_gaia.transpose(), extent=[xbins_gaia.min(),xbins_gaia.max(),ybins_gaia.min(),ybins_gaia.max()], colors='k', linewidth=0.01, levels = [10,30,50])
 plt.text(-0.1, 10.0, 'Gaia DR1')
 plt.xlim(-0.3,2.0)
 plt.ylim(-4.0,12.5)
