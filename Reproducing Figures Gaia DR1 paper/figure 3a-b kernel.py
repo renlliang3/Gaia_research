@@ -34,6 +34,11 @@ d_hip=xy_hip.shape[0]
 n_gaia=xy_gaia.shape[1]
 n_hip=xy_hip.shape[1]
 
+print(d_gaia)
+print(n_gaia)
+print(d_hip)
+print(n_hip)
+
 bw_gaia = (n_gaia * (d_gaia + 2) / 4.)**(-1. / (d_gaia + 4))
 bw_hip = (n_hip * (d_hip + 2) / 4.)**(-1. / (d_hip + 4))
 
