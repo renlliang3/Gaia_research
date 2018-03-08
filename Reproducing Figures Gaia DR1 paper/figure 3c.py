@@ -20,10 +20,11 @@ r = job.get_results()
 x=r['b_v']
 y_gaia=r['g_mag_abs']
 
-counts_gaia,xbins_gaia,ybins_gaia,image_gaia = plt.hist2d(x,y_gaia,bins=250
+counts_gaia,xbins_gaia,ybins_gaia,image_gaia = plt.hist2d(x,y_gaia,bins=300,normed=True
                                       ,norm=LogNorm()
                                       , cmap = plt.cm.viridis)
-plt.contour(counts_gaia.transpose(), extent=[xbins_gaia.min(),xbins_gaia.max(),ybins_gaia.min(),ybins_gaia.max()], colors='k', linewidth=0.01, levels = [10,30,50])
+plt.colorbar()
+plt.contour(counts_gaia.transpose(), extent=[xbins_gaia.min(),xbins_gaia.max(),ybins_gaia.min(),ybins_gaia.max()], colors='k', linewidth=0.01, levels = [0.1,0.3,0.5])
 plt.text(-0.1, 10.0, 'Gaia DR1')
 plt.xlim(-0.3,2.0)
 plt.ylim(-4.0,12.5)
