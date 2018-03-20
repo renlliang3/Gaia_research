@@ -45,14 +45,10 @@ for i in range(len(parallaxes_true)):
 
 #The priors of our Bayes setup model. Which is a Gaussian with something added 
 def lnprob(x, mu, sigma):
-	y = -(((x-mu)/sigma)**2)/2.0
-	if np.isnan(y):
-		return -np.inf
-	else:
-		return y
+    return -(((x-mu)/sigma)**2)/2.0
 
 def lnpriormu_M(mu_M):
-	if -5 < mu_M < 16:
+	if -5 < mu_m < 16:
 		return np.log(1/21.)
 	else:
 		return -np.inf #np.log(0)
@@ -68,13 +64,13 @@ def lnpriorparallax_true(parallax):
 	return np.log(parallax**-4)
 
 def lnpriorMagnitude_abs_true(M,mu_M,sigma_M):
-	return -np.log(sigma_M*np.sqrt(2*np.pi))+lnprob(M,mu_M,sigma_M)
+	return -np.log(sigma_M*np.sqrt(2*np.pi))+lnprob(M,mu_m,sigma_M)
 
 #The likelihoods of our bayes setup, again 400 different ones multiplied together
-def lnlikelihoodparallax_obs(parallax_obs,parallax_true,sigma_parallax_obs):
+def lnlikelihoodparallax_obs(parralax_obs,parallax_true,sigma_parallax_obs):
 	return lnprob(parallax_obs,parallax_true,sigma_parallax_obs)
 
-#print(lnlikelihoodparallax_obs(5,10,3))
+print(lnlikelihoodparallax_obs(5,10,3))
 
 def lnlikelihoodmagnitude_app_obs(magnitude_app_obs,magnitude_app_true,sigma_magnitude_app_obs):
 	return lnprob(magnitude_app_obs,magnitude_app_true,sigma_magnitude_app_obs)
@@ -90,9 +86,9 @@ def lnposterior(theta,magnitudes_app_obs,parallaxes_obs,sigma_magnitudes_app_obs
 
 	holder=0
 
-	#print(len(magnitudes_app_obs))
-	#print(len(mappTrue))
-	#print(len(sigma_magnitudes_app_obs))
+	print(len(magnitudes_app_obs))
+	print(len(mappTrue))
+	print(len(sigma_magnitudes_app_obs))
 	for i in range(N):
 		holder+=lnlikelihoodmagnitude_app_obs(magnitudes_app_obs[i],mappTrue[i],sigma_magnitudes_app_obs[i])
 		holder+=lnlikelihoodparallax_obs(parallaxes_obs[i],pTrue[i],sigma_parallaxes_obs[i])
