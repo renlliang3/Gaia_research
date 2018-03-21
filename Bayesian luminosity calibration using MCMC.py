@@ -106,7 +106,7 @@ def lnposterior(theta,magnitudes_app_obs,parallaxes_obs,sigma_magnitudes_app_obs
 
 #Setting up the MCMC method, starting position will be an educated guess from the observations we have.
 ndim = 2*N+2
-nwalkers = ndim * 5
+nwalkers = ndim * 10
 
 #Some negative parallaxes cause NaN. Replace the values with -15. (-15 was smallest number I found in the list)
 initialMTrue = magnitudes_app_obs + 5*np.log10(parallaxes_obs) + 5
@@ -128,9 +128,9 @@ initialPos = [initialParameters + 1e-4*np.random.randn(ndim) for i in range(nwal
 sampler = emcee.EnsembleSampler(nwalkers, ndim, lnposterior, args=(magnitudes_app_obs,parallaxes_obs,sigma_magnitudes_app_obs,sigma_parallaxes_obs))
 
 #We make 250k "burn-in" steps, after which we store the position, prob and state (state is the state of the randomnumber generator). Reset and restart from "burn-in" position using the left off state of the random number generator. Store only every 150th sample
-pos,prob,state = sampler.run_mcmc(initialPos, 250000)
+pos,prob,state = sampler.run_mcmc(initialPos, 25)
 sampler.reset()
-sampler.run_mcmc(pos,10**6,rstate0=state, thin=150)
+sampler.run_mcmc(pos,10**2,rstate0=state, thin=1)
 
 #Flatchain makes it a 2d array where the rows are the runs and the columns the parameters/dimensions in that run
 chain = sampler.flatchain
