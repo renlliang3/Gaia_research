@@ -163,7 +163,7 @@ sampler = emcee.EnsembleSampler(nwalkers, ndim, lnposterior2, threads=12, args=(
 #We make 250k "burn-in" steps, after which we store the position, prob and state (state is the state of the randomnumber generator). Reset and restart from "burn-in" position using the left off state of the random number generator. Store only every 150th sample
 pos,prob,state = sampler.run_mcmc(initialPos, 200, storechain=False)
 sampler.reset()
-sampler.run_mcmc(pos,1800,rstate0=state, thin=1)
+sampler.run_mcmc(pos,400,rstate0=state, thin=1)
 
 #Flatchain makes it a 2d array where the rows are the runs and the columns the parameters/dimensions in that run
 chain = sampler.flatchain
@@ -181,5 +181,5 @@ print("sigma^2_M={:4.2f}".format(estimatedVarMag)+" +/- {:4.2f}".format(errorEst
 
 #Now we will make a nice corner plot
 fig = corner.corner(chain[:,0:2], labels=["$\mu_M$", "$\sigma_M^2$"], truths=[mu_Mag_true, var_Mag_true])
-fig.savefig("Ulliemam2.png")
+fig.savefig("Ulliemam3.png")
 plt.gcf().clear()

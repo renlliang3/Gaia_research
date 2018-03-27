@@ -1,4 +1,5 @@
 from astropy.table import Table
+from numpy as np
 
 r=Table.read('Fig5-result.vot',format='votable')
 
