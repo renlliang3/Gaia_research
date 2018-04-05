@@ -5,6 +5,7 @@ from astropy.table import Table
 from mpl_toolkits.mplot3d import Axes3D
 from scipy import stats
 from sklearn.neighbors import KernelDensity
+from mayavi import mlab
 import astropy.coordinates as asc
 import matplotlib.pyplot as plt
 import numpy as np
@@ -44,8 +45,13 @@ X, Y, Z=np.mgrid[x.min():x.max():100j, y.min():y.max():100j, z.min():z.max():100
 positions=np.vstack([X.ravel(), Y.ravel(), Z.ravel()])
 dens = np.reshape(np.exp(kde_fit.score_samples(positions.T)), X.shape)
 
-plt.plot
-plt.imshow(np.rot90(dens), cmap=plt.cm.viridis, extent=[x.min(), x.max(), y.min(), y.max(), z.min(), z.max()], aspect='auto')
+# Visualize the density estimate as isosurfaces
+mlab.contour3d(X, Y, Z, dens, opacity=0.5)
+mlab.axes()
+mlab.show()
+
+#plt.plot
+#plt.imshow(np.rot90(dens), cmap=plt.cm.viridis, extent=[x.min(), x.max(), y.min(), y.max(), z.min(), z.max()], aspect='auto')
 #plt.contour(X_gaia, Y_gaia, dens_gaia, colors='k', linewidth=0.01, levels = [10,30,50])
 #plt.text(-0.1, 10.0, 'Gaia DR1')
 #plt.xlim(-0.3,2.0)
@@ -54,7 +60,7 @@ plt.imshow(np.rot90(dens), cmap=plt.cm.viridis, extent=[x.min(), x.max(), y.min(
 #plt.yticks([])
 #plt.gca().invert_yaxis()
 
-plt.savefig('KDE')
+#plt.savefig('KDE')
 
 #fig = plt.figure()
 #ax = Axes3D(fig)
