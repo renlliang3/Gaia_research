@@ -1,10 +1,12 @@
 import astropy.units as u
 from astropy.coordinates.sky_coordinate import SkyCoord
+from astropy.coordinates import LSR
 from astropy.units import Quantity
 from astropy.table import Table
 from scipy import stats
 from mayavi import mlab
 import astropy.coordinates as asc
+import matplotlib.pyplot as plt
 import numpy as np
 import random
 
@@ -68,12 +70,12 @@ vx = np.array([vx[i] for i in sorted(random_indices)])
 vy = np.array([vy[i] for i in sorted(random_indices)])
 vz = np.array([vz[i] for i in sorted(random_indices)])
 
-mlab.quiver3d(x, y, z, vx, vy, vz)
-mlab.axes()
-mlab.show()
+print('Mean of (vx^2+vy^2+vz^2)^0.5: '+str(np.mean((vx**2+vy**2+vz**2)**0.5)))
+print('Mean of (vx_check^2+vy_check^2+vz_check^2)^0.5: '+str(np.mean((vx_check**2+vy_check**2+vz_check**2)**0.5)))
+print('SD of (vx^2+vy^2+vz^2)^0.5: '+str(np.var((vx**2+vy**2+vz**2)**0.5)**0.5))
+print('SD of (vx_check^2+vy_check^2+vz_check^2)^0.5: '+str(np.var((vx_check**2+vy_check**2+vz_check**2)**0.5)**0.5))
 
-#xyz = np.vstack([x,y,z])
-
-#kde = stats.gaussian_kde(xyz)
-
-#X, Y, Z = np.mgrid[x.min():x.max():100j, y.min():y.max():100j, z.min():z.max():100j]
+print('Mean of vx: '+str(np.mean(vx)))
+print('Mean of vx_check: '+str(np.mean(vx_check)))
+print('sd of vx: '+str(np.var(vx)**0.5))
+print('sd of vx_check: '+str(np.var(vx_check)**0.5))
