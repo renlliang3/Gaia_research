@@ -56,9 +56,9 @@ vz = coordinates_ICRS.velocity.d_z.value
 v_Tra = pmra_cosdec * dist * 4.74 * 10**-3 #mas/yr -> km/s
 v_Tdec = pmdec * dist * 4.74 * 10**-3 #mas/yr -> km/s
 
-vx_check = (vrad * np.cos(dec) * np.cos(ra)) - (v_Tra * np.sin(ra)) - (v_Tdec * np.sin(dec) * np.cos(ra))
-vy_check = (vrad * np.cos(dec) * np.sin(ra)) + (v_Tra * np.cos(ra)) - (v_Tdec * np.sin(dec) * np.sin(ra))
-vz_check = (vrad * np.sin(dec)) + (v_Tdec * np.cos(dec))
+vx_check = (vrad * np.cos(dec*np.pi/180) * np.cos(ra*np.pi/180)) - (v_Tra * np.sin(ra*np.pi/180)) - (v_Tdec * np.sin(dec*np.pi/180) * np.cos(ra*np.pi/180))
+vy_check = (vrad * np.cos(dec*np.pi/180) * np.sin(ra*np.pi/180)) + (v_Tra * np.cos(ra*np.pi/180)) - (v_Tdec * np.sin(dec*np.pi/180) * np.sin(ra*np.pi/180))
+vz_check = (vrad * np.sin(dec*np.pi/180)) + (v_Tdec * np.cos(dec*np.pi/180))
 
 random_indices = random.sample(range(len(x)),100000)
 

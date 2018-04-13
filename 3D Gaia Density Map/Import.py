@@ -38,7 +38,7 @@ vx = coordinates_ICRS.velocity.d_x.value
 vy = coordinates_ICRS.velocity.d_y.value
 vz = coordinates_ICRS.velocity.d_z.value
 
-random_indices = random.sample(range(len(x)),10000)
+random_indices = random.sample(range(len(x)),1000)
 
 x = np.array([x[i] for i in sorted(random_indices)])
 y = np.array([y[i] for i in sorted(random_indices)])
@@ -48,19 +48,19 @@ vx = np.array([vx[i] for i in sorted(random_indices)])
 vy = np.array([vy[i] for i in sorted(random_indices)])
 vz = np.array([vz[i] for i in sorted(random_indices)])
 
-#xyz = np.vstack([x,y,z])
+xyz = np.vstack([x,y,z])
 
-#kde = stats.gaussian_kde(xyz)
+kde = stats.gaussian_kde(xyz)
 
-#X, Y, Z = np.mgrid[x.min():x.max():100j, y.min():y.max():100j, z.min():z.max():100j]
+X, Y, Z = np.mgrid[x.min():x.max():100j, y.min():y.max():100j, z.min():z.max():100j]
 
-#coords = np.vstack([item.ravel() for item in [X, Y, Z]])
+coords = np.vstack([item.ravel() for item in [X, Y, Z]])
 #positions = np.vstack([X.ravel(), Y.ravel(), Z.ravel()])
-#density = kde(coords).reshape(X.shape)
+density = kde(coords).reshape(X.shape)
 #np.reshape(np.exp(kde_fit.score_samples(positions.T)), X.shape)
 
 # Visualize the density estimate as isosurfaces
-#mlab.contour3d(X, Y, Z, density, opacity=0.5)
+mlab.contour3d(X, Y, Z, density, opacity=0.5)
 mlab.quiver3d(x, y, z, vx, vy, vz)
 mlab.axes()
 mlab.show()
