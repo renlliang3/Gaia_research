@@ -5,7 +5,6 @@ from astropy.table import Table
 from scipy import stats
 from mayavi import mlab
 import astropy.coordinates as asc
-#import matplotlib.pyplot as plt
 import numpy as np
 import random
 
@@ -50,35 +49,14 @@ vz = np.array([vz[i] for i in sorted(random_indices)])
 
 xyz = np.vstack([x,y,z])
 
-kde = stats.gaussian_kde(xyz)
+kde = stats.gaussian_kde(xyz, bw_method=0.1)
 
 X, Y, Z = np.mgrid[x.min():x.max():100j, y.min():y.max():100j, z.min():z.max():100j]
+positions = np.vstack([X.ravel(), Y.ravel(), Z.ravel()])
+density = kde(positions).reshape(X.shape)
 
-coords = np.vstack([item.ravel() for item in [X, Y, Z]])
-#positions = np.vstack([X.ravel(), Y.ravel(), Z.ravel()])
-density = kde(coords).reshape(X.shape)
-#np.reshape(np.exp(kde_fit.score_samples(positions.T)), X.shape)
-
-# Visualize the density estimate as isosurfaces
+#Visualize the density estimate as isosurfaces
 mlab.contour3d(X, Y, Z, density, opacity=0.5)
 mlab.quiver3d(x, y, z, vx, vy, vz)
 mlab.axes()
 mlab.show()
-
-#plt.plot
-#plt.imshow(np.rot90(dens), cmap=plt.cm.viridis, extent=[x.min(), x.max(), y.min(), y.max(), z.min(), z.max()], aspect='auto')
-#plt.contour(X_gaia, Y_gaia, dens_gaia, colors='k', linewidth=0.01, levels = [10,30,50])
-#plt.text(-0.1, 10.0, 'Gaia DR1')
-#plt.xlim(-0.3,2.0)
-#plt.ylim(-4.0,12.5)
-#plt.xlabel('(B-V)')
-#plt.yticks([])
-#plt.gca().invert_yaxis()
-
-#plt.savefig('KDE')
-
-#fig = plt.figure()
-#ax = Axes3D(fig)
-
-#ax.scatter(coordinates_cartesian_galactic_real[:,0], coordinates_cartesian_galactic_real[:,1], coordinates_cartesian_galactic_real[:,2], s=0.1)
-#plt.show()

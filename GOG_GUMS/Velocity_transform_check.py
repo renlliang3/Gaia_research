@@ -44,6 +44,7 @@ dist = np.array([results['dist'][i] for i in list])
 pmra_cosdec = pmra*np.cos(dec*np.pi/180)
                            
 coordinates_ICRS = asc.SkyCoord(ra=ra*u.degree, dec=dec*u.degree, distance=dist*u.pc, pm_ra_cosdec=pmra_cosdec*u.mas/u.yr, pm_dec=pmdec*u.mas/u.yr, radial_velocity=vrad*u.km/u.s, frame='icrs', obstime='J2010')
+single_coordinate = asc.SkyCoord(ra=ra[1]*u.degree, dec=dec[1]*u.degree, distance=dist[1]*u.pc, pm_ra_cosdec=pmra_cosdec[1]*u.mas/u.yr, pm_dec=pmdec[1]*u.mas/u.yr, radial_velocity=vrad[1]*u.km/u.s, frame='icrs', obstime='J2010')
 
 x = coordinates_ICRS.cartesian.x.value#.filled(0)
 y = coordinates_ICRS.cartesian.y.value#.filled(0)
@@ -53,12 +54,23 @@ vx = coordinates_ICRS.velocity.d_x.value
 vy = coordinates_ICRS.velocity.d_y.value
 vz = coordinates_ICRS.velocity.d_z.value
 
-v_Tra = pmra_cosdec * dist * 4.74 * 10**-3 #mas/yr -> km/s
-v_Tdec = pmdec * dist * 4.74 * 10**-3 #mas/yr -> km/s
+vx_single = single_coordinate.velocity.d_x.value
+vy_single = single_coordinate.velocity.d_y.value
+vz_single = single_coordinate.velocity.d_z.value
+
+v_Tra = pmra_cosdec * dist * 4.74039 * 10**-3 #mas/yr * pc -> km/s
+v_Tdec = pmdec * dist * 4.74039 * 10**-3 #mas/yr * pc -> km/s
 
 vx_check = (vrad * np.cos(dec*np.pi/180) * np.cos(ra*np.pi/180)) - (v_Tra * np.sin(ra*np.pi/180)) - (v_Tdec * np.sin(dec*np.pi/180) * np.cos(ra*np.pi/180))
 vy_check = (vrad * np.cos(dec*np.pi/180) * np.sin(ra*np.pi/180)) + (v_Tra * np.cos(ra*np.pi/180)) - (v_Tdec * np.sin(dec*np.pi/180) * np.sin(ra*np.pi/180))
 vz_check = (vrad * np.sin(dec*np.pi/180)) + (v_Tdec * np.cos(dec*np.pi/180))
+
+v_Tra_single = pmra_cosdec[1] * dist[1] * 4.74039 * 10**-3 #mas/yr -> km/s
+v_Tdec_single = pmdec[1] * dist[1] * 4.74039 * 10**-3 #mas/yr -> km/s
+
+vx_check_single = (vrad[1] * np.cos(dec[1]*np.pi/180) * np.cos(ra[1]*np.pi/180)) - (v_Tra_single * np.sin(ra[1]*np.pi/180)) - (v_Tdec_single * np.sin(dec[1]*np.pi/180) * np.cos(ra[1]*np.pi/180))
+vy_check_single = (vrad[1] * np.cos(dec[1]*np.pi/180) * np.sin(ra[1]*np.pi/180)) + (v_Tra_single * np.cos(ra[1]*np.pi/180)) - (v_Tdec_single * np.sin(dec[1]*np.pi/180) * np.sin(ra[1]*np.pi/180))
+vz_check_single = (vrad[1] * np.sin(dec[1]*np.pi/180)) + (v_Tdec_single * np.cos(dec[1]*np.pi/180))
 
 random_indices = random.sample(range(len(x)),100000)
 
@@ -79,3 +91,16 @@ print('Mean of vx: '+str(np.mean(vx)))
 print('Mean of vx_check: '+str(np.mean(vx_check)))
 print('sd of vx: '+str(np.var(vx)**0.5))
 print('sd of vx_check: '+str(np.var(vx_check)**0.5))
+
+print(single_coordinate)
+print('')
+
+print('Single coordinate transformation with astropy:')
+print('vx: ' + str(vx_single))
+print('vy: ' + str(vy_single))
+print('vz: ' + str(vz_single))
+
+print('Single coordinate transformation check:')
+print('vx: ' + str(vx_check_single))
+print('vy: ' + str(vy_check_single))
+print('vz: ' + str(vz_check_single))
