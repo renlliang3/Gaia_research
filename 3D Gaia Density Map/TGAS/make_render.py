@@ -78,7 +78,3 @@ def make_frame(t):
 #mlab.show()
 animation = mpy.VideoClip(make_frame, duration=duration)
 animation.write_gif("sinc2.gif", fps=15)
-
-
-
-
