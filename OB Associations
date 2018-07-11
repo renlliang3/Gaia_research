@@ -1,0 +1,75 @@
+Vela blue stream:
+Vel OB5
+NGC2451B
+gamma Velorum
+NGC2516
+Trumpler 10
+Vel OB2
+NGC2547
+
+gammavelorum_icrs = asc.SkyCoord(ra='08h09m31.95013s', dec=(-47-(20/60)-(11.7108/3600))*u.degree, distance=336*u.pc, frame='icrs')
+gammavelorum_galactic = gammavelorum_icrs.galactic
+
+#NGC2516_ICRS = asc.SkyCoord(ra=360*(7/24+58/(24*60)+20/(24*3600))*u.degree, dec=-(60+52/60)*u.degree, distance=(1300/3.26156)*u.pc, frame='icrs')
+NGC2516_ICRS = asc.SkyCoord(ra=360*(7/24+58/(24*60)+20/(24*3600))*u.degree, dec=-(60+52/60)*u.degree, distance=373*u.pc, frame='icrs')
+NGC2516_galactic = NGC2516_ICRS.galactic
+NGC2516_cartesian_galactic = asc.spherical_to_cartesian(NGC2516_galactic.distance,NGC2516_galactic.b,NGC2516_galactic.l)
+
+#trumpler10_ICRS = asc.SkyCoord(ra=360*(8/24+47.8/(24*60))*u.degree, dec=-(42+29/60)*u.degree, distance=337.25*u.pc, frame='icrs')
+trumpler10_ICRS = asc.SkyCoord(ra=360*(8/24+47.8/(24*60))*u.degree, dec=-(42+29/60)*u.degree, distance=366*u.pc, frame='icrs')
+trumpler10_galactic = trumpler10_ICRS.galactic
+trumpler10_cartesian_galactic = asc.spherical_to_cartesian(trumpler10_galactic.distance,trumpler10_galactic.b,trumpler10_galactic.l)
+
+#velaOB2_galactic = asc.SkyCoord(l=263*u.degree, b=-7*u.degree, distance=450*u.pc, frame='galactic')
+velaOB2_galactic = asc.SkyCoord(l=263*u.degree, b=-7*u.degree, distance=410*u.pc, frame='galactic')
+velaOB2_cartesian_galactic = asc.spherical_to_cartesian(velaOB2_galactic.distance,velaOB2_galactic.b,velaOB2_galactic.l)
+
+#NGC2547_ICRS = asc.SkyCoord(ra=360*(8/24 + 10.7/(24*60))*u.degree,dec=-(49+16/60)*u.degree, distance=((1.97*10**3)/3.26156)*u.pc, frame='icrs')
+NGC2547_ICRS = asc.SkyCoord(ra=360*(8/24 + 10.7/(24*60))*u.degree,dec=-(49+16/60)*u.degree, distance=410*u.pc, frame='icrs')
+NGC2547_galactic = NGC2547_ICRS.galactic
+NGC2547_cartesian_galactic = asc.spherical_to_cartesian(NGC2547_galactic.distance,NGC2547_galactic.b,NGC2547_galactic.l)
+
+The Orion blue stream
+Bellatrix
+HIP22931
+HIP27345
+HIP33175
+Rigel
+NGC2232
+Alnilam
+Ori OB1a,b,c,d: a~350pc, b~400pc, c~400pc, d~420pc
+
+OriOB1_galactic = asc.SkyCoord(l=206.91*u.degree, b=-17.59, distance=400*u.pc, frame='galactic')
+
+HIP22931_ICRS = asc.SkyCoord(ra=360*(4/24+55/(24*60)+14/(24*3600))*u.degree, dec=-(5+9.8/60)*u.degree, distance=180*u.pc, frame='icrs')
+HIP27345_ICRS = asc.SkyCoord(ra=360*(5/24+48/(24*60)+16/(24*3600))*u.degree, dec=-(4+0.7/60)*u.degree, distance=202*u.pc, frame='icrs')
+HIP33175_ICRS = asc.SkyCoord(ra=360*(6/24+57/(24*60)+14/(24*3600))*u.degree, dec=-(5+55.2/60)*u.degree, distance=195*u.pc, frame='icrs')
+NGC2232_ICRS = asc.SkyCoord(ra=360*(6/24+27/(24*60)+15/(24*3600))*u.degree, dec=-(4+45/60+30/3600)*u.degree, distance=325*u.pc, frame='icrs')
+
+Bellatrix_ICRS = asc.SkyCoord(ra=360*(5/24+25/(24*60)+7.86325/(24*3600))*u.degree, dec=+(6+20/60+58.9318/3600)*u.degree, distance=77*u.pc, frame='icrs')
+Rigel_ICRS = asc.SkyCoord(ra=360*(5/24+14/(24*60)+32.27/(24*3600))*u.degree, dec=-(8+12/60+5.8981/3600)*u.degree, distance=260*u.pc, frame='icrs')
+Alnilam_ICRS = asc.SkyCoord(ra=360*(5/24+36/(24*60)+12.8/(24*3600))*u.degree, dec=-(1+12/60+6.9/3600)*u.degree, distance=260*u.pc, frame='icrs')
+
+
+The Scorpius-Canis Majoris blue stream
+USco
+UCL
+LCC
+IC2602
+aCar
+IC2391
+HIP45189
+NGC2451A
+Col 135
+HIP28944
+
+USco_ICRS = asc.SkyCoord(ra=360*(16/24+12/(24*60)+0/(24*3600))*u.degree, dec=-(23+24/60+0/3600)*u.degree, distance=145*u.pc, frame='icrs')
+UCL_ICRS = asc.SkyCoord(ra=360*(15/24+24/(24*60)+0/(24*3600))*u.degree, dec=-(41+54/60+0/3600)*u.degree, distance=140*u.pc, frame='icrs')
+LLC_ICRS = asc.SkyCoord(ra=360*(12/24+19/(24*60)+0/(24*3600))*u.degree, dec=-(57+06/60+0/3600)*u.degree, distance=118*u.pc, frame='icrs')
+IC2602_ICRS = asc.SkyCoord(ra=360*(10/24+42/(24*60)+58/(24*3600))*u.degree, dec=-(64+24/60+0/3600)*u.degree, distance=147*u.pc, frame='icrs')
+aCar_ICRS = asc.SkyCoord(ra=360*(9/24+9/(24*60)+30/(24*3600))*u.degree, dec=-(59+07/60+42/3600)*u.degree, distance=150*u.pc, frame='icrs')
+IC2391_ICRS = asc.SkyCoord(ra=360*(8/24+40/(24*60)+32/(24*3600))*u.degree, dec=-(53+02/60+0/3600)*u.degree, distance=176*u.pc, frame='icrs')
+HIP45189_ICRS = asc.SkyCoord(ra=360*(9/24+13/(24*60)+47/(24*3600))*u.degree, dec=-(43+44/60+24/3600)*u.degree, distance=174*u.pc, frame='icrs')
+NGC2451A_ICRS = asc.SkyCoord(ra=360*(7/24+43/(24*60)+12/(24*3600))*u.degree, dec=-(38+24/60+0/3600)*u.degree, distance=188*u.pc, frame='icrs')
+Col135_ICRS = asc.SkyCoord(ra=360*(7/24+17/(24*60)+17/(24*3600))*u.degree, dec=-(36+49/60+0/3600)*u.degree, distance=258*u.pc, frame='icrs')
+HIP28944_ICRS = asc.SkyCoord(ra=360*(6/24+09/(24*60)+36/(24*3600))*u.degree, dec=-(22+09.1/60+0/3600)*u.degree, distance=272*u.pc, frame='icrs')

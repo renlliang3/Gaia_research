@@ -1,0 +1,13 @@
+import astropy.units as u
+from astropy.coordinates.sky_coordinate import SkyCoord
+from astropy.units import Quantity
+from astroquery.gaia import Gaia
+import numpy as np
+
+job = Gaia.launch_job_async("SELECT * \
+FROM gaiadr2.gaia_source AS g \
+WHERE g.parallax_over_error >= 5 \
+AND g.parallax >= 2 \
+AND g.bp_rp <= 0.33 \
+AND g.bp_rp >= 0 \
+AND (6*(g.bp_rp) + 2) >= (g.phot_g_mean_mag + 5 * log10(g.parallax) - 10)", dump_to_file=True)
