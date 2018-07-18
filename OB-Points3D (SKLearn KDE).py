@@ -9,28 +9,15 @@ import numpy as np
 import random
 import os
 
-script_dir = os.path.dirname(__file__)
-rel_path = "Data/A-OB-500pc-mean_AG_EBminR_xyz.fits"
-#rel_path = "Data/pms_500pc_C1C2_nogiants_prlx_2MASS_noext.fits"
-abs_file_path = os.path.join(script_dir, rel_path)
-rel_path2 = "Data/OB_positions.dat"
-abs_file_path2 = os.path.join(script_dir, rel_path2)
-
-readresults = Table.read(abs_file_path,format='fits')
-results = np.array(readresults)
-
 # OB ass positions
-ob = np.genfromtxt(abs_file_path2, names = True, dtype=None)
+ob = np.genfromtxt("Data/OB_positions.dat", names = True, dtype=None)
 x_OB, y_OB, z_OB = ob['xg'], ob['yg'], ob['zg']
 OB_Names = ob['OB_Names']
 
-x = results['xg']
-y = results['yg']
-z = results['zg']
+readresults = Table.read("Data/A-OB-vrad-500pc-mean_AG_EBminR_v_xyz.fits",format='fits')
+results = np.array(readresults)
 
-#vx = results['vx']
-#vy = results['vy']
-#vz = results['vz']
+x, y, z, vx, vy, vz = results['xg'], results['yg'], results['zg'], results['vx']+14.0, results['vy']+12.24, results['vz']+7.25
 
 xyz = np.vstack([x,y,z])
 
@@ -47,13 +34,32 @@ X, Y, Z = np.mgrid[-crange:crange:100j, -crange:crange:100j, -crange:crange:100j
 positions = np.vstack([X.ravel(), Y.ravel(), Z.ravel()])
 dens = np.reshape(np.exp(kde_fit.score_samples(positions.T)), X.shape)
 
+"""
+readresults_OD = Table.read('Sourceswithincontour3e10-5.dat',format='ascii')
+results_OD = np.array(readresults_OD)
+
+x_OD, y_OD, z_OD, vx_OD, vy_OD, vz_OD = results_OD['xg'], results_OD['yg'], results_OD['zg'], results_OD['vx']+14.0, results_OD['vy']+12.24, results_OD['vz']+7.25
+
+xyz_OD = np.vstack([x_OD,y_OD,z_OD])
+
+bw_OD = 20
+
+kde_fit_OD = KernelDensity(bandwidth=bw_OD, kernel='gaussian').fit(xyz_OD.T)
+
+crange_OD = 500
+
+X_OD, Y_OD, Z_OD = np.mgrid[-crange_OD:crange_OD:100j, -crange_OD:crange_OD:100j, -crange_OD:crange_OD:100j]
+positions_OD = np.vstack([X_OD.ravel(), Y_OD.ravel(), Z_OD.ravel()])
+dens_OD = np.reshape(np.exp(kde_fit_OD.score_samples(positions_OD.T)), X_OD.shape)
+"""
+
 #Visualize the density estimate as isosurfaces
 figure = mlab.figure('myfig')
 figure.scene.disable_render = True # Super duper trick
 #mlab.contour3d(X, Y, Z, dens, extent = [-650, 650, -650, 650, -650, 650], opacity=0.3, colormap = 'Blues', figure = figure)
-mlab.contour3d(X, Y, Z, dens, contours=[6*10**-9,7*10**-9,8*10**-9,9*10**-9,1*10**-8,1.125*10**-8,1.25*10**-8,1.375*10**-8,1.5*10**-8,2*10**-8], opacity=0.3, vmin=np.min(dens), vmax=np.max(dens), colormap = 'Blues', figure = figure)
-#contours=[10*10**-9,1.5*10**-8,3*10**-8,7*10**-8,1*10**-7],
-#mlab.quiver3d(x, y, z, vx, vy, vz)
+mlab.contour3d(X, Y, Z, dens, contours=[4*10**-9,10*10**-9,20*10**-9,25*10**-9], opacity=0.3, vmin=np.min(dens), vmax=np.max(dens), colormap = 'Blues', figure = figure)
+#mlab.contour3d(X_OD, Y_OD, Z_OD, dens_OD, contours=[0.5*10**-7,1.5*10**-7,2.5*10**-7,3.5*10**-7,4.5*10**-7], opacity=0.3, vmin=np.min(dens_OD), vmax=np.max(dens_OD), colormap = 'Reds', figure = figure)
+mlab.quiver3d(x, y, z, vx, vy, vz)
 mlab.axes(nb_labels = 5, figure = figure)
 #mlab.axes(extent = [-650, 650, -650, 650, -650, 650], ranges = [-650, 650, -650, 650, -650, 650], nb_labels = 7, figure = figure)
 mlab.points3d(x_OB, y_OB, z_OB, np.full(len(x_OB),10), scale_factor=2, figure = figure)

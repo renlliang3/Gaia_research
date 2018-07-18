@@ -1,5 +1,7 @@
 import astropy.units as u
 from astropy.coordinates.sky_coordinate import SkyCoord
+from astropy.coordinates import LSR
+from astropy.coordinates import GalacticLSR
 from astropy.units import Quantity
 from astropy.table import Table
 from scipy import stats
@@ -9,11 +11,7 @@ import random
 import csv
 import os
 
-script_dir = os.path.dirname(__file__)
-rel_path = "Data/A-OB-vrad-500pc-mean_AG_EBminR.fits"
-abs_file_path = os.path.join(script_dir, rel_path)
-
-readresults = Table.read(abs_file_path,format='fits')
+readresults = Table.read("Data/A-OB-vrad-500pc-mean_AG_EBminR.fits",format='fits')
 results = np.array(readresults)
 distances = 1000/results['parallax']
 
@@ -54,10 +52,12 @@ vx = coordinates_galactic_and_vel.velocity.d_x.value
 vy = coordinates_galactic_and_vel.velocity.d_y.value
 vz = coordinates_galactic_and_vel.velocity.d_z.value
 
-#towrite = np.column_stack((source_id,x,y,z)).tolist()#,vx,vy,vz)).tolist()
-towrite = list(zip(source_id.tolist(),x.tolist(),y.tolist(),z.tolist(),vx.tolist(),vy.tolist(),vz.tolist()))
-towrite.insert(0,['source_id','xg','yg','zg','vx','vy','vz'])
+vx_LSR_check = vx + 11.1
+vy_LSR_check = vy + 12.24
+vz_LSR_check = vz + 7.25
 
-with open('A-OB-vrad-500pc-mean_AG_EBminR_v_xyz.csv', 'w') as myfile:
-    wr = csv.writer(myfile, quoting=csv.QUOTE_NONE)
-    wr.writerows(towrite)
+coordinates_GalacticLSR = coordinates_ICRS_and_vel.transform_to(GalacticLSR)
+
+vx_LSR = coordinates_GalacticLSR.velocity.d_x.value
+vy_LSR = coordinates_GalacticLSR.velocity.d_y.value
+vz_LSR = coordinates_GalacticLSR.velocity.d_z.value

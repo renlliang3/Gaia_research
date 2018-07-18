@@ -10,7 +10,7 @@ from astropy.io import fits
 
 script_dir = os.path.dirname(__file__)
 #rel_path = "Data/OBvrad650-Katz_xyz.fits"
-rel_path = "Data/A-OB-500pc-no-extinction_xyz.fits"
+rel_path = "Data/A-OB-vrad-500pc-mean_AG_EBminR_v_xyz.fits"
 abs_file_path = os.path.join(script_dir, rel_path)
 rel_path2 = "Data/OB_positions.dat"
 abs_file_path2 = os.path.join(script_dir, rel_path2)
@@ -66,10 +66,10 @@ mlab.clf()
 src = mlab.pipeline.scalar_field(b)
 m = mlab.pipeline.iso_surface(src,
                               #contours = [0.2, 0.3, 0.5],
-                              contours = [0.2,0.3,0.4],
+                              contours = [0.05,0.1,0.2,0.3],
                               opacity = 0.3, colormap = 'Blues', figure = fig_myv)
 mlab.axes(#ranges = [-1300, 1300, -1300, 1300, -3500, 3500],
-          ranges = [-411, 500, -497, 488, -158, 124],
+          ranges = [-454, 500, -497, 500, -273, 350],
           color = (0,0,0), nb_labels = 5, xlabel = 'X(pc)', ylabel = 'Y(pc)', zlabel = 'Z(pc)', figure = fig_myv)
 mlab.points3d(x_ob_map, y_ob_map, z_ob_map, np.full(len(x_ob_map), 20),  scale_factor = 0.5)
 for i in range(len(x_ob)):
