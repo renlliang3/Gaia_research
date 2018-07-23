@@ -14,10 +14,11 @@ ob = np.genfromtxt("Data/OB_positions.dat", names = True, dtype=None)
 x_OB, y_OB, z_OB = ob['xg'], ob['yg'], ob['zg']
 OB_Names = ob['OB_Names']
 
-readresults = Table.read("Data/A-OB-vrad-500pc-mean_AG_EBminR_v_xyz.fits",format='fits')
+readresults = Table.read("Data/A-OB-500pc-maxvtan40-10vb-20-mean_AG_EBminR_xyz_pm_vtan.fits",format='fits')
 results = np.array(readresults)
 
-x, y, z, vx, vy, vz = results['xg'], results['yg'], results['zg'], results['vx']+14.0, results['vy']+12.24, results['vz']+7.25
+#x, y, z, vx, vy, vz = results['xg'], results['yg'], results['zg'], results['vx']+14.0, results['vy']+12.24, results['vz']+7.25
+x, y, z = results['xg'], results['yg'], results['zg']
 
 xyz = np.vstack([x,y,z])
 
@@ -55,15 +56,15 @@ dens_OD = np.reshape(np.exp(kde_fit_OD.score_samples(positions_OD.T)), X_OD.shap
 
 #Visualize the density estimate as isosurfaces
 figure = mlab.figure('myfig')
-figure.scene.disable_render = True # Super duper trick
+#figure.scene.disable_render = True # Super duper trick
 #mlab.contour3d(X, Y, Z, dens, extent = [-650, 650, -650, 650, -650, 650], opacity=0.3, colormap = 'Blues', figure = figure)
-mlab.contour3d(X, Y, Z, dens, contours=[4*10**-9,10*10**-9,20*10**-9,25*10**-9], opacity=0.3, vmin=np.min(dens), vmax=np.max(dens), colormap = 'Blues', figure = figure)
+mlab.contour3d(X, Y, Z, dens, contours=[7.45*10**-9,7.5*10*--9,10*10**-9,12.5*10**-9,15*10**-9,17.5*10**-9,20*10**-9,22.5*10**-9], opacity=0.3, vmin=np.min(dens), vmax=np.max(dens), colormap = 'Blues', figure = figure)
 #mlab.contour3d(X_OD, Y_OD, Z_OD, dens_OD, contours=[0.5*10**-7,1.5*10**-7,2.5*10**-7,3.5*10**-7,4.5*10**-7], opacity=0.3, vmin=np.min(dens_OD), vmax=np.max(dens_OD), colormap = 'Reds', figure = figure)
-mlab.quiver3d(x, y, z, vx, vy, vz)
-mlab.axes(nb_labels = 5, figure = figure)
+#mlab.quiver3d(x, y, z, vx, vy, vz)
+mlab.axes(nb_labels = 3, figure = figure)
 #mlab.axes(extent = [-650, 650, -650, 650, -650, 650], ranges = [-650, 650, -650, 650, -650, 650], nb_labels = 7, figure = figure)
 mlab.points3d(x_OB, y_OB, z_OB, np.full(len(x_OB),10), scale_factor=2, figure = figure)
 for i in range(len(x_OB)):
 	mlab.text3d(x_OB[i], y_OB[i], z_OB[i], OB_Names[i], scale=10, figure = figure)
-figure.scene.disable_render = False # Super duper trick
+#figure.scene.disable_render = False # Super duper trick
 mlab.show()
