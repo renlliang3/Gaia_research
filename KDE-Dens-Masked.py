@@ -17,25 +17,41 @@ x_OB, y_OB, z_OB = ob['xg'], ob['yg'], ob['zg']
 OB_Names = ob['OB_Names']
 """
 
-readresults2 = Table.read('Data/OBRegions/A-OB-vrad-maxvtan40-mean_AG_EBminR/ScoCencontour7.5e10-8.dat',format='ascii')
-results2 = np.array(readresults2)
+readresults_OD1 = Table.read('Data/OBRegions/A-OB-vrad-maxvtan40-mean_AG_EBminR/Orioncontour2.5e10-7-UVW-1.0e10-4.dat',format='ascii')
+results_OD1 = np.array(readresults_OD1)
 
-x_OD, y_OD, z_OD, vx_OD, vy_OD, vz_OD = results2['xg'], results2['yg'], results2['zg'], results2['vx']+14.0, results2['vy']+12.24, results2['vz']+7.25
+x_OD1, y_OD1, z_OD1, vx_OD1, vy_OD1, vz_OD1 = results_OD1['xg'], results_OD1['yg'], results_OD1['zg'], results_OD1['vx']+14.0, results_OD1['vy']+12.24, results_OD1['vz']+7.25
+
+readresults_OD2 = Table.read('Data/OBRegions/A-OB-vrad-maxvtan40-mean_AG_EBminR/Orioncontour2.5e10-7-UVW-2.5e10-4.dat',format='ascii')
+results_OD2 = np.array(readresults_OD2)
+
+x_OD2, y_OD2, z_OD2, vx_OD2, vy_OD2, vz_OD2 = results_OD2['xg'], results_OD2['yg'], results_OD2['zg'], results_OD2['vx']+14.0, results_OD2['vy']+12.24, results_OD2['vz']+7.25
+
+"""
+readresults_OD3 = Table.read('Data/OBRegions/A-OB-vrad-maxvtan40-mean_AG_EBminR/ScoCencontour7.5e10-8-UVW-0.6e10-4-Cluster3.dat',format='ascii')
+results_OD3 = np.array(readresults_OD3)
+
+x_OD3, y_OD3, z_OD3, vx_OD3, vy_OD3, vz_OD3 = results_OD3['xg'], results_OD3['yg'], results_OD3['zg'], results_OD3['vx']+14.0, results_OD3['vy']+12.24, results_OD3['vz']+7.25
+
+readresults_OD4 = Table.read('Data/OBRegions/A-OB-vrad-maxvtan40-mean_AG_EBminR/ScoCencontour7.5e10-8-UVW-0.6e10-4-Cluster4.dat',format='ascii')
+results_OD4 = np.array(readresults_OD4)
+
+x_OD4, y_OD4, z_OD4, vx_OD4, vy_OD4, vz_OD4 = results_OD4['xg'], results_OD4['yg'], results_OD4['zg'], results_OD4['vx']+14.0, results_OD4['vy']+12.24, results_OD4['vz']+7.25
+"""
 
 readresults = Table.read('Data/A-OB-vrad-500pc-maxvtan40-10vb-20-mean_AG_EBminR_v_xyz.fits',format='fits')
 results = np.array(readresults)
-
 #readresults2 = Table.read("Data/Updated-A-Query-Radial-Velocities.fits",format='fits')
 #results2 = np.array(readresults2)
 
-x, y, z, vx, vy, vz = results['xg'], results['yg'], results['zg'], results['vx'], results['vy'], results['vz']
+source_id, x, y, z, vx, vy, vz = results['source_id'], results['xg'], results['yg'], results['zg'], results['vx']+14.0, results['vy']+12.24, results['vz']+7.25
 
-xmin=-150
-xmax=200
-ymin=-275
-ymax=75
-zmin=-175
-zmax=175
+xmin=-400
+xmax=-200
+ymin=-250
+ymax=-50
+zmin=-200
+zmax=0
 
 x_cube = x[np.where((x>=xmin)&(x<=xmax)&(y>=ymin)&(y<=ymax)&(z>=zmin)&(z<=zmax))]
 y_cube = y[np.where((x>=xmin)&(x<=xmax)&(y>=ymin)&(y<=ymax)&(z>=zmin)&(z<=zmax))]
@@ -61,14 +77,21 @@ w = int(boxes.imag/2)
 figure = mlab.figure('myfig')
 figure.scene.disable_render = True # Super duper trick
 #mlab.contour3d(X, Y, Z, dens, extent = [-650, 650, -650, 650, -650, 650], opacity=0.3, colormap = 'Blues', figure = figure)
-mlab.contour3d(X, Y, Z, dens, contours=[7.5*10**-8,8*10**-8,10*10**-8,12*10**-8], opacity=0.3, vmin=np.min(dens), vmax=np.max(dens), colormap = 'Blues', figure = figure)
+mlab.contour3d(X, Y, Z, dens, contours=[2.5*10**-7,3.5*10**-7,4.5*10**-7,5.5*10**-7,6.0*10**-7], opacity=0.3, vmin=np.min(dens), vmax=np.max(dens), colormap = 'Blues', figure = figure)
+mlab.axes(nb_labels = 5, figure = figure)
 #mlab.contour3d(X_OD, Y_OD, Z_OD, dens_OD, contours=[1*10**-8,2*10**-8,5*10**-8,8*10**-8,11*10**-8], opacity=0.3, vmin=np.min(dens_OD), vmax=np.max(dens_OD), colormap = 'Reds', figure = figure)
-mlab.quiver3d(x_OD, y_OD, z_OD, vx_OD, vy_OD, vz_OD)
+#mlab.quiver3d(x_OD1, y_OD1, z_OD1, vx_OD1, vy_OD1, vz_OD1)
+#mlab.points3d(x_OD1, y_OD1, z_OD1, np.full(len(x_OD1),1), scale_factor = 3, color=(0,1,0), figure = figure)
 #mlab.axes(extent = [-650, 650, -650, 650, -650, 650], ranges = [-650, 650, -650, 650, -650, 650], nb_labels = 7, figure = figure)
 #mlab.points3d(x_OB, y_OB, z_OB, np.full(len(x_OB),10), scale_factor=2, figure = figure)
-#mlab.points3d(x_cube, y_cube, z_cube, np.full(len(x_cube),1), scale_factor = 1, color=(0,0,0), figure = figure)
-mlab.points3d(x_OD, y_OD, z_OD, np.full(len(x_OD),1), scale_factor = 1, color=(1,1,1), figure = figure)
-mlab.axes(nb_labels = 5, figure = figure)
+#mlab.points3d(x_cube, y_cube, z_cube, np.full(len(x_cube),1), scale_factor = 1, color=(1,1,1), figure = figure)
+mlab.quiver3d(x_OD2, y_OD2, z_OD2, vx_OD2, vy_OD2, vz_OD2)
+mlab.points3d(x_OD2, y_OD2, z_OD2, np.full(len(x_OD2),1), scale_factor = 3, color=(0,1,0), figure = figure)
+#mlab.quiver3d(x_OD3, y_OD3, z_OD3, vx_OD3, vy_OD3, vz_OD3)
+#mlab.points3d(x_OD3, y_OD3, z_OD3, np.full(len(x_OD3),1), scale_factor = 3, color=(0,0,1), figure = figure)
+#mlab.quiver3d(x_OD4, y_OD4, z_OD4, vx_OD4, vy_OD4, vz_OD4)
+#mlab.points3d(x_OD4, y_OD4, z_OD4, np.full(len(x_OD4),1), scale_factor = 3, color=(1,1,1), figure = figure)
+
 #for i in range(len(x_OB)):
 #	mlab.text3d(x_OB[i], y_OB[i], z_OB[i], OB_Names[i], scale=10, figure = figure)
 
