@@ -17,7 +17,7 @@ x_OB, y_OB, z_OB = ob['xg'], ob['yg'], ob['zg']
 OB_Names = ob['OB_Names']
 """
 
-readresults2 = Table.read('Data/OBRegions/A-OB-vrad-maxvtan40-mean_AG_EBminR/ScoCencontour7.5e10-8.dat',format='ascii')
+readresults2 = Table.read('Data/OBRegions/A-OB-vrad-maxvtan40-mean_AG_EBminR/Velacontour2.0e10-7.dat',format='ascii')
 results2 = np.array(readresults2)
 
 x_OD, y_OD, z_OD, vx_OD, vy_OD, vz_OD = results2['xg'], results2['yg'], results2['zg'], results2['vx']+14.0, results2['vy']+12.24, results2['vz']+7.25
@@ -31,11 +31,11 @@ results = np.array(readresults)
 x, y, z, vx, vy, vz = results['xg'], results['yg'], results['zg'], results['vx'], results['vy'], results['vz']
 
 xmin=-150
-xmax=200
-ymin=-275
-ymax=75
-zmin=-175
-zmax=175
+xmax=50
+ymin=-500
+ymax=-300
+zmin=-100
+zmax=100
 
 x_cube = x[np.where((x>=xmin)&(x<=xmax)&(y>=ymin)&(y<=ymax)&(z>=zmin)&(z<=zmax))]
 y_cube = y[np.where((x>=xmin)&(x<=xmax)&(y>=ymin)&(y<=ymax)&(z>=zmin)&(z<=zmax))]
@@ -61,12 +61,12 @@ w = int(boxes.imag/2)
 figure = mlab.figure('myfig')
 figure.scene.disable_render = True # Super duper trick
 #mlab.contour3d(X, Y, Z, dens, extent = [-650, 650, -650, 650, -650, 650], opacity=0.3, colormap = 'Blues', figure = figure)
-mlab.contour3d(X, Y, Z, dens, contours=[7.5*10**-8,8*10**-8,10*10**-8,12*10**-8], opacity=0.3, vmin=np.min(dens), vmax=np.max(dens), colormap = 'Blues', figure = figure)
+mlab.contour3d(X, Y, Z, dens, contours=[2*10**-7,2.5*10**-7,3.5*10**-7,4.5*10**-7,5.0*10**-7,5.5*10**-7], opacity=0.3, vmin=np.min(dens), vmax=np.max(dens), colormap = 'Blues', figure = figure)
 #mlab.contour3d(X_OD, Y_OD, Z_OD, dens_OD, contours=[1*10**-8,2*10**-8,5*10**-8,8*10**-8,11*10**-8], opacity=0.3, vmin=np.min(dens_OD), vmax=np.max(dens_OD), colormap = 'Reds', figure = figure)
 mlab.quiver3d(x_OD, y_OD, z_OD, vx_OD, vy_OD, vz_OD)
 #mlab.axes(extent = [-650, 650, -650, 650, -650, 650], ranges = [-650, 650, -650, 650, -650, 650], nb_labels = 7, figure = figure)
 #mlab.points3d(x_OB, y_OB, z_OB, np.full(len(x_OB),10), scale_factor=2, figure = figure)
-#mlab.points3d(x_cube, y_cube, z_cube, np.full(len(x_cube),1), scale_factor = 1, color=(0,0,0), figure = figure)
+#mlab.points3d(x_cube, y_cube, z_cube, np.full(len(x_cube),1), scale_factor = 1, color=(1,1,1), figure = figure)
 mlab.points3d(x_OD, y_OD, z_OD, np.full(len(x_OD),1), scale_factor = 1, color=(1,1,1), figure = figure)
 mlab.axes(nb_labels = 5, figure = figure)
 #for i in range(len(x_OB)):
