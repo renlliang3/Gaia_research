@@ -30,6 +30,7 @@ for i in range(len(source_id)):
 for k in range(len(nonmatches)):
 	results = np.delete(results,nonmatches[k]-k)
 
+"""
 j=0
 nonmatches_check = np.array([])
 for i in range(len(source_id)):
@@ -42,3 +43,7 @@ for i in range(len(source_id)):
 			not_found = False
 			j+=1
 	print(j)
+"""
+
+readresults.remove_rows(nonmatches.astype(int))
+readresults.write('crossmatched.fits', format='fits')
