@@ -29,7 +29,7 @@ distances = 1000/results['parallax']
 #converted_ra = coordinates_galactic.icrs.ra.value
 #converted_dec = coordinates_galactic.icrs.dec.value
 
-coordinates_ICRS = asc.SkyCoord(ra=results['ra']*u.degree, dec=results['dec']*u.degree, distance=distances*u.pc, pm_ra_cosdec=results['pmra']*u.mas/u.yr, pm_dec=results['pmdec']*u.mas/u.yr, frame='icrs', obstime='J2015.5')
+coordinates_ICRS = asc.SkyCoord(ra=results['ra']*u.degree, dec=results['dec']*u.degree, distance=distances*u.pc, pm_ra_cosdec=results['pmra']*u.mas/u.yr, pm_dec=results['pmdec']*u.mas/u.yr, radial_velocity=np.zeros(len(distances))*u.km/u.s, frame='icrs', obstime='J2015.5')
 
 #coordinates_ICRS_and_vel = asc.SkyCoord(ra=results['ra']*u.degree, dec=results['dec']*u.degree, distance=distances*u.pc, pm_ra_cosdec=results['pmra']*u.mas/u.yr, pm_dec=results['pmdec']*u.mas/u.yr, radial_velocity=results['radial_velocity']*u.km/u.s, frame='icrs', obstime='J2015.5')
 
@@ -51,6 +51,10 @@ pm_l_cosb = coordinates_galactic.pm_l_cosb.value
 vtb = distances*(4.74057 * 10**-3)*pm_b
 vtl = distances*(4.74057 * 10**-3)*pm_l_cosb
 
+vx = coordinates_galactic.velocity.d_x.value
+vy = coordinates_galactic.velocity.d_y.value
+vz = coordinates_galactic.velocity.d_z.value
+
 #distance = np.sqrt(x**2+y**2+z**2)
 
 #indices650 = [i for i in range(len(distance)) if distance[i] <= 650]
@@ -67,9 +71,9 @@ vtl = distances*(4.74057 * 10**-3)*pm_l_cosb
 #towrite = list(zip(source_id.tolist(),x.tolist(),y.tolist(),z.tolist(),vx.tolist(),vy.tolist(),vz.tolist()))
 #towrite.insert(0,['source_id','xg','yg','zg','vx','vy','vz'])
 
-towrite = list(zip(source_id.tolist(),x.tolist(),y.tolist(),z.tolist(),distances.tolist(),pm_l_cosb.tolist(),pm_b.tolist(),vtl.tolist(),vtb.tolist()))
-towrite.insert(0,['source_id','xg','yg','zg','distances','pm_l_cosb','pm_b','vtl','vtb'])
+towrite = list(zip(source_id.tolist(),x.tolist(),y.tolist(),z.tolist(),distances.tolist(),pm_l_cosb.tolist(),pm_b.tolist(),vtl.tolist(),vtb.tolist(),vx.tolist(),vy.tolist(),vz.tolist()))
+towrite.insert(0,['source_id','xg','yg','zg','distances','pm_l_cosb','pm_b','vtl','vtb','vx','vy','vz'])
 
-with open('A-OB-500pc-maxvtan40-10vb-20-mean_AG_EBminR_xyz_pm_vtan.csv', 'w') as myfile:
+with open('A-OB-500pc-maxvtan40-10vb-20-mean_AG_EBminR_xyz_pm_vtan_vrad0.csv', 'w') as myfile:
     wr = csv.writer(myfile, quoting=csv.QUOTE_NONE)
     wr.writerows(towrite)

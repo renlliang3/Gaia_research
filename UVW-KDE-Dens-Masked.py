@@ -11,12 +11,13 @@ import numpy as np
 import random
 import os
 
-readresults_OD1 = Table.read('Data/OBRegions/A-OB-vrad-maxvtan40-mean_AG_EBminR/Orioncontour2.5e10-7-UVW-1.0e10-4.dat',format='ascii')
+
+readresults_OD1 = Table.read('Data/OBRegions/A-OB-vrad-maxvtan40-mean_AG_EBminR/NGC3532contour3.5e10-7-Cluster1.dat',format='ascii')
 results_OD1 = np.array(readresults_OD1)
 
 x_OD1, y_OD1, z_OD1, vx_OD1, vy_OD1, vz_OD1 = results_OD1['xg'], results_OD1['yg'], results_OD1['zg'], results_OD1['vx']+14.0, results_OD1['vy']+12.24, results_OD1['vz']+7.25
 
-readresults_OD2 = Table.read('Data/OBRegions/A-OB-vrad-maxvtan40-mean_AG_EBminR/Orioncontour2.5e10-7-UVW-2.5e10-4.dat',format='ascii')
+readresults_OD2 = Table.read('Data/OBRegions/A-OB-vrad-maxvtan40-mean_AG_EBminR/NGC3532contour3.5e10-7-Cluster2.dat',format='ascii')
 results_OD2 = np.array(readresults_OD2)
 
 x_OD2, y_OD2, z_OD2, vx_OD2, vy_OD2, vz_OD2 = results_OD2['xg'], results_OD2['yg'], results_OD2['zg'], results_OD2['vx']+14.0, results_OD2['vy']+12.24, results_OD2['vz']+7.25
@@ -33,7 +34,7 @@ results_OD4 = np.array(readresults_OD4)
 x_OD4, y_OD4, z_OD4, vx_OD4, vy_OD4, vz_OD4 = results_OD4['xg'], results_OD4['yg'], results_OD4['zg'], results_OD4['vx']+14.0, results_OD4['vy']+12.24, results_OD4['vz']+7.25
 """
 
-readresults = Table.read('Data/OBRegions/A-OB-vrad-maxvtan40-mean_AG_EBminR/Orioncontour2.5e10-7.dat',format='ascii')
+readresults = Table.read('Data/OBRegions/A-OB-vrad-maxvtan40-mean_AG_EBminR/NGC3532contour3.5e10-7.dat',format='ascii')
 results = np.array(readresults)
 
 source_id, x, y, z, vx, vy, vz = results['source_id'], results['xg'], results['yg'], results['zg'], results['vx']+14.0, results['vy']+12.24, results['vz']+7.25
@@ -59,13 +60,13 @@ figure = mlab.figure('myfig')
 figure.scene.disable_render = True # Super duper trick
 #mlab.contour3d(VX, VY, VZ, dens, contours=[0.25*10**-5,0.5*10**-5,1*10**-5,2*10**-5,2.5*10**-5,3*10**-5], opacity=0.3, colormap = 'Blues', figure = figure)
 mlab.contour3d(VX, VY, VZ, dens, contours=[0.1*10**-4,0.5*10**-4,1*10**-4,1.5*10**-4,2*10**-4,2.5*10**-4], opacity=0.3, vmin=np.min(dens), vmax=np.max(dens), colormap = 'Reds', figure = figure)
-mlab.axes(xlabel='U (km/s)', ylabel='V (km/s)', zlabel='W (km/s)', nb_labels = 5, figure = figure)
+mlab.axes(xlabel='U (km/s)', ylabel='V (km/s)', zlabel='W (km/s)', nb_labels = 3, figure = figure)
 #mlab.quiver3d(x, y, z, vx, vy, vz)
 
 #mlab.axes(extent = [-650, 650, -650, 650, -650, 650], ranges = [-650, 650, -650, 650, -650, 650], nb_labels = 7, figure = figure)
 #mlab.points3d(vx, vy, vz, np.full(len(vx),1), scale_factor = 1, color=(1,1,1), figure = figure)
 mlab.points3d(vx_OD1, vy_OD1, vz_OD1, np.full(len(x_OD1),1), scale_factor = 1, color=(0,1,0), figure = figure)
-#mlab.points3d(vx_OD2, vy_OD2, vz_OD2, np.full(len(x_OD2),1), scale_factor = 1, color=(0,1,0), figure = figure)
+mlab.points3d(vx_OD2, vy_OD2, vz_OD2, np.full(len(x_OD2),1), scale_factor = 1, color=(0,0,1), figure = figure)
 #mlab.points3d(vx_OD3, vy_OD3, vz_OD3, np.full(len(x_OD3),1), scale_factor = 1, color=(0,0,1), figure = figure)
 #mlab.points3d(vx_OD4, vy_OD4, vz_OD4, np.full(len(x_OD4),1), scale_factor = 1, color=(1,1,1), figure = figure)
 figure.scene.disable_render = False # Super duper trick
@@ -84,9 +85,10 @@ ticks = [range(-40,100,20), range(-50,50,25), range(-20,30,10)]
 i=0
 for ax in axs:
     ax.set(xlabel=xlabel[i], ylabel='Counts', xticks = ticks[i])
-    i+=1=
+    i+=1
 
-plt.savefig('1D-Histograms-UVW-Velacontour2.0e10-7.png')
+plt.savefig('1D-Histograms-UVW-NGC3532contour3.5e10-7.png')
+
 
 t = 2.5*10**-4
 densmask = np.array((dens>=t), dtype = bool)

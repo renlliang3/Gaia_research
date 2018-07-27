@@ -14,13 +14,13 @@ ob = np.genfromtxt("Data/OB_positions.dat", names = True, dtype=None)
 x_OB, y_OB, z_OB = ob['xg'], ob['yg'], ob['zg']
 OB_Names = ob['OB_Names']
 
-readresults = Table.read("Data/A-OB-500pc-maxvtan40-10vb-20-mean_AG_EBminR_xyz_pm_vtan.fits",format='fits')
+readresults = Table.read("Data/A-OB-500pc-maxvtan40-10vb-20-mean_AG_EBminR_xyz_pm_vtan_vrad0.fits",format='fits')
 results = np.array(readresults)
 
 #x, y, z, vx, vy, vz = results['xg'], results['yg'], results['zg'], results['vx']+14.0, results['vy']+12.24, results['vz']+7.25
-x, y, z = results['xg'], results['yg'], results['zg']
+x, y, z, vx, vy, vz = results['xg'], results['yg'], results['zg'], results['vx'], results['vy'], results['vz']
 
-xyz = np.vstack([x,y,z])
+xyz = np.vstack([x[0:5000],y[0:5000],z[0:5000]])
 
 d = xyz.shape[0]
 n = xyz.shape[1]
@@ -60,7 +60,8 @@ figure = mlab.figure('myfig')
 #mlab.contour3d(X, Y, Z, dens, extent = [-650, 650, -650, 650, -650, 650], opacity=0.3, colormap = 'Blues', figure = figure)
 mlab.contour3d(X, Y, Z, dens, contours=[7.45*10**-9,7.5*10*--9,10*10**-9,12.5*10**-9,15*10**-9,17.5*10**-9,20*10**-9,22.5*10**-9], opacity=0.3, vmin=np.min(dens), vmax=np.max(dens), colormap = 'Blues', figure = figure)
 #mlab.contour3d(X_OD, Y_OD, Z_OD, dens_OD, contours=[0.5*10**-7,1.5*10**-7,2.5*10**-7,3.5*10**-7,4.5*10**-7], opacity=0.3, vmin=np.min(dens_OD), vmax=np.max(dens_OD), colormap = 'Reds', figure = figure)
-#mlab.quiver3d(x, y, z, vx, vy, vz)
+mlab.quiver3d(x[0:1000], y[0:1000], z[0:1000], vx[0:1000]+14.0, vy[0:1000]+12.24, vz[0:1000]+7.25)
+#mlab.quiver3d(x[0:5000], y[0:5000], z[0:5000], vx[0:5000], vy[0:5000], vz[0:5000])
 mlab.axes(nb_labels = 3, figure = figure)
 #mlab.axes(extent = [-650, 650, -650, 650, -650, 650], ranges = [-650, 650, -650, 650, -650, 650], nb_labels = 7, figure = figure)
 mlab.points3d(x_OB, y_OB, z_OB, np.full(len(x_OB),10), scale_factor=2, figure = figure)
